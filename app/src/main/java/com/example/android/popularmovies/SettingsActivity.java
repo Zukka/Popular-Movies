@@ -23,9 +23,11 @@ public class SettingsActivity extends AppCompatActivity {
         switch(view.getId()) {
             case R.id.radio_popular:
                 if (checked)
+
                     break;
             case R.id.radio_rating:
                 if (checked)
+
                     break;
         }
     }
