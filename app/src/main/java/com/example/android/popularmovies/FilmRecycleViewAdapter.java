@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -13,11 +14,13 @@ public class FilmRecycleViewAdapter extends RecyclerView.Adapter<FilmRecycleView
     private List<Film> mFilmData;
 
     public static class FilmsViewHolder extends RecyclerView.ViewHolder {
+        CardView cv;
+        TextView filmTitle;
+        ImageView filmImage;
 
-        public TextView filmTitle;
         FilmsViewHolder(View itemView) {
             super(itemView);
-
+            filmImage = itemView.findViewById(R.id.film_image);
             filmTitle = itemView.findViewById(R.id.film_title);
         }
     }
