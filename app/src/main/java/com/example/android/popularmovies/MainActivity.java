@@ -21,6 +21,7 @@ import com.example.android.popularmovies.utils.PopularMoviesConstants;
 import com.example.android.popularmovies.utils.TheMovieDbJsonUtils;
 
 import java.net.URL;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
     private GridLayoutManager gridLayoutManager;
 
-
+    private List<Film> filmsList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
         new RequestFavoriteMovies().execute(endPointOrder);
     }
 
-    public class RequestFavoriteMovies extends AsyncTask<String, Void, Film[]> {
+    public class RequestFavoriteMovies extends AsyncTask<String, Void, List<Film>> {
 
         @Override
         protected void onPreExecute() {
@@ -80,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        protected Film[] doInBackground(String... params) {
+        protected List<Film> doInBackground(String... params) {
 
             if (params.length == 0) {
                 return null;
@@ -93,9 +94,7 @@ public class MainActivity extends AppCompatActivity {
                 String jsonMoviesResponse = NetworkUtils
                         .getResponseFromHttpUrl(movieRequestUrl);
 
-               System.out.println(jsonMoviesResponse);
-
-                Film[] simpleJsonFilsData = TheMovieDbJsonUtils
+                List<Film> simpleJsonFilsData = TheMovieDbJsonUtils
                         .getSimpleFilmsStringsFromJson(MainActivity.this, jsonMoviesResponse);
 
                 return simpleJsonFilsData;
@@ -107,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(Film[] movieData) {
+        protected void onPostExecute(List<Film> movieData) {
             if (movieData != null) {
                 filmRecycleViewAdapter.setFilmData(movieData);
             }

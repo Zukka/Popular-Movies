@@ -47,7 +47,7 @@ public class FilmRecycleViewAdapter extends RecyclerView.Adapter<FilmRecycleView
         return mFilmData.size();
     }
 
-    public void setFilmData(Film[] filmData) {
+    public void setFilmData(List<Film> filmData) {
         mFilmData = filmData;
         notifyDataSetChanged();
     }
