@@ -1,4 +1,4 @@
-package com.example.android.popularmovies;
+package com.example.android.popularmovies.utils;
 
 /**
  * Created by zukka on 17/03/18.
@@ -14,5 +14,5 @@ public class PopularMoviesConstants {
     public static final String theMovieDbTopRateEndPoint = "/movie/top_rated";
 
     public static final String theMovieDbApiKEYValue = "YOUR_API_KEY";
-    public static final String theMovieDbApiKEYParameter = "?api_key=";
+    public static final String theMovieDbApiKEYParameter = "api_key";
 }
