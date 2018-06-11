@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         filmRecyclerView.setItemAnimator(new DefaultItemAnimator());
         loadMoviesData();
 
-        filmRecycleViewAdapter = new FilmRecycleViewAdapter();
+        filmRecycleViewAdapter = new FilmRecycleViewAdapter(this);
         filmRecyclerView.setAdapter(filmRecycleViewAdapter);
     }
 

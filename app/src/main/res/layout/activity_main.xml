@@ -4,13 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:background="@color/grey_300">
+    android:background="@color/grey_300" >
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/films_recycled_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="vertical"
-        />
+        android:clipToPadding="false"
+        android:scrollbars="vertical" />
 
 </RelativeLayout>

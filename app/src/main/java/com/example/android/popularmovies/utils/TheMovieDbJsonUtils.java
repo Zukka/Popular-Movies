@@ -51,7 +51,7 @@ public class TheMovieDbJsonUtils {
             JSONObject filmObject = filmArray.getJSONObject(i);
 
            String FilmTitle = filmObject.get(FilmJSonConstants.Title).toString();
-           String FilmPoster = filmObject.get(FilmJSonConstants.Poster).toString();
+           String FilmPoster = PopularMoviesConstants.imageBaseURL + PopularMoviesConstants.imageSizeURL + filmObject.get(FilmJSonConstants.Poster).toString();
            String FilmOverView = filmObject.get(FilmJSonConstants.OverView).toString();
            String FilmVoteAverage = filmObject.get(FilmJSonConstants.VoteAverage).toString();
            String FilmReleaseDate = filmObject.get(FilmJSonConstants.ReleaseDate).toString();
