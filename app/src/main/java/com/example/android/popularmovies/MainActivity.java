@@ -7,6 +7,7 @@ import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -27,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
     private RecyclerView filmRecyclerView;
     private FilmRecycleViewAdapter filmRecycleViewAdapter;
-
+    private static RecyclerView.Adapter adapter;
     private GridLayoutManager gridLayoutManager;
 
     private List<Film> filmsList;
@@ -36,15 +37,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        filmRecyclerView = findViewById(R.id.film_recycler_view);
+        filmRecyclerView = findViewById(R.id.films_recycled_view);
         filmRecyclerView.setHasFixedSize(true);
         gridLayoutManager = new GridLayoutManager(this, (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) ? 2 : 4);
         filmRecyclerView.setLayoutManager(gridLayoutManager);
+        filmRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        loadMoviesData();
 
         filmRecycleViewAdapter = new FilmRecycleViewAdapter();
-
         filmRecyclerView.setAdapter(filmRecycleViewAdapter);
-        loadMoviesData();
     }
 
     @Override
@@ -109,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(List<Film> movieData) {
             if (movieData != null) {
                 filmRecycleViewAdapter.setFilmData(movieData);
+                filmRecyclerView.setAdapter(filmRecycleViewAdapter);
             }
         }
     }

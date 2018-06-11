@@ -14,20 +14,19 @@ public class FilmRecycleViewAdapter extends RecyclerView.Adapter<FilmRecycleView
     private List<Film> mFilmData;
 
     public static class FilmsViewHolder extends RecyclerView.ViewHolder {
-        CardView cv;
         TextView filmTitle;
         ImageView filmImage;
 
         FilmsViewHolder(View itemView) {
             super(itemView);
-            filmImage = itemView.findViewById(R.id.film_image);
+            filmImage = itemView.findViewById(R.id.film_photo);
             filmTitle = itemView.findViewById(R.id.film_title);
         }
     }
     @Override
     public FilmsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.row, parent, false);
+                .inflate(R.layout.film_card, parent, false);
 
         FilmsViewHolder vh = new FilmsViewHolder(v);
         return vh;
@@ -38,7 +37,7 @@ public class FilmRecycleViewAdapter extends RecyclerView.Adapter<FilmRecycleView
 
         Film film = mFilmData.get(position);
         holder.filmTitle.setText(film.toString());
-     //   DataProvider.Content tmp=mDataset.get(position);
+    //    DataProvider.Content tmp= mDataset.get(position);
      //   holder.title.setText(tmp.getTitle());
      //   holder.filmTitle.setText(mFilmData[position].getItem(0).toString());
     }

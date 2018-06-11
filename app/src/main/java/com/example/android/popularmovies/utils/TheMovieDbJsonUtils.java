@@ -50,11 +50,11 @@ public class TheMovieDbJsonUtils {
         for (int i = 0; i < filmArray.length(); i++) {
             JSONObject filmObject = filmArray.getJSONObject(i);
 
-           String FilmTitle = filmObject.getJSONObject(FilmJSonConstants.Title).toString();
-           String FilmPoster = filmObject.getJSONObject(FilmJSonConstants.Poster).toString();
-           String FilmOverView = filmObject.getJSONObject(FilmJSonConstants.OverView).toString();
-           String FilmVoteAverage = filmObject.getJSONObject(FilmJSonConstants.VoteAverage).toString();
-           String FilmReleaseDate = filmObject.getJSONObject(FilmJSonConstants.ReleaseDate).toString();
+           String FilmTitle = filmObject.get(FilmJSonConstants.Title).toString();
+           String FilmPoster = filmObject.get(FilmJSonConstants.Poster).toString();
+           String FilmOverView = filmObject.get(FilmJSonConstants.OverView).toString();
+           String FilmVoteAverage = filmObject.get(FilmJSonConstants.VoteAverage).toString();
+           String FilmReleaseDate = filmObject.get(FilmJSonConstants.ReleaseDate).toString();
            Film film = new Film(FilmTitle, FilmPoster, FilmOverView, FilmVoteAverage, FilmReleaseDate);
            parsedFilmData.add(film);
         }
