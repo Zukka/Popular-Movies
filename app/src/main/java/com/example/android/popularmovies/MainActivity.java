@@ -9,13 +9,13 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.GridView;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.android.popularmovies.utils.NetworkUtils;
 import com.example.android.popularmovies.utils.PopularMoviesConstants;
@@ -28,15 +28,16 @@ public class MainActivity extends AppCompatActivity {
 
     private RecyclerView filmRecyclerView;
     private FilmRecycleViewAdapter filmRecycleViewAdapter;
-    private static RecyclerView.Adapter adapter;
     private GridLayoutManager gridLayoutManager;
+    private ProgressBar loadingDataProgressBar;
+    private String errorMessage;
 
-    private List<Film> filmsList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        loadingDataProgressBar = findViewById(R.id.progressBar);
         filmRecyclerView = findViewById(R.id.films_recycled_view);
         filmRecyclerView.setHasFixedSize(true);
         gridLayoutManager = new GridLayoutManager(this, (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) ? 2 : 4);
@@ -46,6 +47,14 @@ public class MainActivity extends AppCompatActivity {
 
         filmRecycleViewAdapter = new FilmRecycleViewAdapter(this);
         filmRecyclerView.setAdapter(filmRecycleViewAdapter);
+    }
+
+    private void isProgressBarVisible(boolean isVisible) {
+        if (isVisible) {
+            loadingDataProgressBar.setVisibility(View.VISIBLE);
+        } else {
+            loadingDataProgressBar.setVisibility((View.GONE));
+        }
     }
 
     @Override
@@ -78,7 +87,9 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
+
             super.onPreExecute();
+            isProgressBarVisible(true);
         }
 
         @Override
@@ -101,16 +112,21 @@ public class MainActivity extends AppCompatActivity {
                 return simpleJsonFilsData;
 
             } catch (Exception e) {
-                e.printStackTrace();
+                String message = e.getLocalizedMessage();
+                Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG).show();
                 return null;
             }
         }
 
         @Override
         protected void onPostExecute(List<Film> movieData) {
+            isProgressBarVisible(false);
             if (movieData != null) {
+                filmRecyclerView.setVisibility(View.VISIBLE);
                 filmRecycleViewAdapter.setFilmData(movieData);
                 filmRecyclerView.setAdapter(filmRecycleViewAdapter);
+            } else {
+                Toast.makeText(MainActivity.this, getString(R.string.loadFailed), Toast.LENGTH_LONG).show();
             }
         }
     }

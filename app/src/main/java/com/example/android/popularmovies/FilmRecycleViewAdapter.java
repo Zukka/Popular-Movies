@@ -1,6 +1,8 @@
 package com.example.android.popularmovies;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Parcelable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,15 +41,26 @@ public class FilmRecycleViewAdapter extends RecyclerView.Adapter<FilmRecycleView
 
     @Override
     public void onBindViewHolder(FilmsViewHolder holder, int position) {
-
-        Film film = mFilmData.get(position);
+        final Film film = mFilmData.get(position);
         Picasso.with( mContext ).load( film.PosterURL).into( holder.filmImage );
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentShowDetails = new Intent(mContext, DetailsActivity.class);
+                intentShowDetails.putExtra("FilmName", film.Title);
+                intentShowDetails.putExtra("FilmPosterURL", film.PosterURL);
+                intentShowDetails.putExtra("FilmOverView", film.OverView);
+                intentShowDetails.putExtra("FilmVoteAverage", film.VoteAverage);
+                intentShowDetails.putExtra("FilmReleaseDate", film.ReleaseDate);
+                mContext.startActivity(intentShowDetails);
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
         if (null == mFilmData) return 0;
-        System.out.println("mFilmData:" + mFilmData.size());
         return mFilmData.size();
     }
 
