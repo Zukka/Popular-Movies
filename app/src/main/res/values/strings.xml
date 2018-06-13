@@ -5,4 +5,7 @@
     <string name="ratingOrder">Rating</string>
     <string name="orderBy">Order by:</string>
     <string name="loadFailed">Download movies failed.</string>
+    <string name="average">Average Vote:</string>
+    <string name="releaseDate">Release date:</string>
+    <string name="placeHolder">Place holder</string>
 </resources>
