@@ -17,7 +17,7 @@ public class NetworkUtils {
 
     public static URL buildUrl(String endpointURL) {
 
-        String baseURL = PopularMoviesConstants.theMovieDbBAseURL + endpointURL;
+        String baseURL = PopularMoviesConstants.theMovieDbBaseURL + endpointURL;
         Uri builtUri = Uri.parse(baseURL).buildUpon()
                 .appendQueryParameter(PopularMoviesConstants.theMovieDbApiKEYParameter, PopularMoviesConstants.theMovieDbApiKEYValue)
                 .build();

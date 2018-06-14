@@ -30,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
     private FilmRecycleViewAdapter filmRecycleViewAdapter;
     private GridLayoutManager gridLayoutManager;
     private ProgressBar loadingDataProgressBar;
-    private String errorMessage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

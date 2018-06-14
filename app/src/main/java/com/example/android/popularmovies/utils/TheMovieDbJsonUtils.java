@@ -1,7 +1,6 @@
 package com.example.android.popularmovies.utils;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 
 import com.example.android.popularmovies.Film;
 
@@ -11,10 +10,7 @@ import org.json.JSONObject;
 
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
 /**
  * Created by zukka on 19/03/18.

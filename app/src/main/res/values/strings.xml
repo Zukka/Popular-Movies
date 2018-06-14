@@ -2,10 +2,13 @@
     <string name="app_name">Popular Movies</string>
     <string name="action_settings">Settings</string>
     <string name="popularOrder">Popularity</string>
+    <string name="favoritesOrder">Favorites</string>
     <string name="ratingOrder">Rating</string>
     <string name="orderBy">Order by:</string>
     <string name="loadFailed">Download movies failed.</string>
     <string name="average">Average Vote:</string>
     <string name="releaseDate">Release date:</string>
     <string name="placeHolder">Place holder</string>
+    <string name="mark_favorite">MARK AS\nFAVORITE</string>
+    <string name="action_review">Reviews</string>
 </resources>
