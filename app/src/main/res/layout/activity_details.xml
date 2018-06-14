@@ -51,7 +51,7 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/detailFilmAverage"
                         android:text="@string/placeHolder"
-                        android:padding="@dimen/details_padding"
+                        android:paddingLeft="@dimen/details_padding"
                         android:fontFamily="casual"
                         android:textStyle="bold"
                         />
@@ -61,7 +61,7 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/detailFilmReleaseDate"
                         android:text="@string/placeHolder"
-                        android:padding="@dimen/details_padding"
+                        android:paddingLeft="@dimen/details_padding"
                         android:fontFamily="casual"
                         android:textStyle="bold"
                         />
