@@ -3,6 +3,7 @@ package com.example.android.popularmovies.utils;
 import android.content.Context;
 
 import com.example.android.popularmovies.Film;
+import com.example.android.popularmovies.Review;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -18,7 +19,7 @@ import java.util.List;
 
 public class TheMovieDbJsonUtils {
 
-    public static List<Film> getSimpleFilmsStringsFromJson(Context mainActivity, String jsonMoviesResponse) throws JSONException {
+    public static List<Film> getSimpleFilmsStringsFromJson(String jsonMoviesResponse) throws JSONException {
 
         final String OWM_MESSAGE_CODE = "cod";
         final String FILM_LIST = "results";
@@ -40,13 +41,12 @@ public class TheMovieDbJsonUtils {
             }
         }
 
-
         JSONArray filmArray = filmJson.getJSONArray(FILM_LIST);
         parsedFilmData = new ArrayList<>();
         for (int i = 0; i < filmArray.length(); i++) {
             JSONObject filmObject = filmArray.getJSONObject(i);
 
-            String FilmId = filmObject.get(FilmJSonConstants.ID).toString();
+            int FilmId = (int)filmObject.get(FilmJSonConstants.ID);
             String FilmTitle = filmObject.get(FilmJSonConstants.TITLE).toString();
             String FilmPoster = PopularMoviesConstants.IMAGE_BASE_URL + PopularMoviesConstants.IMAGE_SIZE_URL + filmObject.get(FilmJSonConstants.POSTER).toString();
             String FilmOverView = filmObject.get(FilmJSonConstants.OVERVIEW).toString();
@@ -56,5 +56,39 @@ public class TheMovieDbJsonUtils {
             parsedFilmData.add(film);
         }
         return parsedFilmData;
+    }
+
+    public static List<Review> getSimpleReviewStringsFromJson(String jsonReviewsResponse) throws JSONException  {
+
+        final String OWM_MESSAGE_CODE = "cod";
+        final String REVIEW_LIST = "results";
+
+        JSONObject reviewJson = new JSONObject(jsonReviewsResponse);
+        List<Review> parsedReviewData;
+        if (reviewJson.has(OWM_MESSAGE_CODE)) {
+            int errorCode = reviewJson.getInt(OWM_MESSAGE_CODE);
+
+            switch (errorCode) {
+                case HttpURLConnection.HTTP_OK:
+                    break;
+                case HttpURLConnection.HTTP_NOT_FOUND:
+                    /* Location invalid */
+                    return null;
+                default:
+                    /* Server probably down */
+                    return null;
+            }
+        }
+
+        JSONArray reviewArray = reviewJson.getJSONArray(REVIEW_LIST);
+        parsedReviewData = new ArrayList<>();
+        for (int i = 0; i < reviewArray.length(); i++) {
+            JSONObject filmObject = reviewArray.getJSONObject(i);
+            String Author = filmObject.get(FilmJSonConstants.AUTHOR).toString();
+            String Content = filmObject.get(FilmJSonConstants.CONTENT).toString();
+            Review review = new Review(Author,Content);
+            parsedReviewData.add(review);
+        }
+        return  parsedReviewData;
     }
 }

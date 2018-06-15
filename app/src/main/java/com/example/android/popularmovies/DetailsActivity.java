@@ -21,22 +21,24 @@ import java.util.List;
 
 public class DetailsActivity extends AppCompatActivity {
 
+    Film film;
     private RecyclerView trailerRecyclerView;
   //  private TrailerRecycleViewAdapter trailerRecyclerViewAdapter;
     private LinearLayoutManager trailerLinearLayoutManager;
     private ProgressBar trailerProgressBar;
-    String filmId;
-
+    String filmTitle, filmPosterURL, filmOverView, filmVoteAverage, filmReleaseDate;
+    int filmId;
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
         Intent detailsIntent = getIntent();
-        filmId = detailsIntent.getStringExtra("FilmId");
-        String filmTitle = detailsIntent.getStringExtra("FilmName");
-        String filmPosterURL = detailsIntent.getStringExtra("FilmPosterURL");
-        String filmOverView = detailsIntent.getStringExtra("FilmOverView");
-        String filmVoteAverage = detailsIntent.getStringExtra("FilmVoteAverage");
-        String filmReleaseDate = detailsIntent.getStringExtra("FilmReleaseDate");
+        film = detailsIntent.getParcelableExtra("film");
+        filmId = film.getId();
+        filmTitle = film.getTitle();
+        filmPosterURL = film.getPosterURL();
+        filmOverView = film.getOverView();
+        filmVoteAverage = film.getVoteAverage();
+        filmReleaseDate = film.getReleaseDate();
 
         TextView _filmTitle = findViewById(R.id.detailFilmTitle);
         _filmTitle.setText(filmTitle);
@@ -77,8 +79,8 @@ public class DetailsActivity extends AppCompatActivity {
 
         if (id == R.id.action_review) {
             Intent intent = new Intent(this, ReviewsActivity.class);
-            intent.putExtra("FilmID", filmId);
-            startActivity(intent);
+            intent.putExtra("film", film);
+            startActivityForResult(intent, 1);
             return true;
         }
         return super.onOptionsItemSelected(item);

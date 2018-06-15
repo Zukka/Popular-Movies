@@ -31,7 +31,7 @@ public class NetworkUtils {
         return url;
     }
 
-    public static URL buildRequestReviewsUrl(String movieID) {
+    public static URL buildRequestReviewsUrl(int movieID) {
 
         String baseURL =
                         PopularMoviesConstants.THE_MOVIE_DB_BASE_URL +
@@ -39,9 +39,10 @@ public class NetworkUtils {
                         movieID +
                         PopularMoviesConstants.THE_MOVIE_DB_REVIEWS_FETCH_REQUEST;
 
-        System.out.println(baseURL);
 
-        Uri builtUri = Uri.parse(baseURL).buildUpon().build();
+        Uri builtUri = Uri.parse(baseURL).buildUpon()
+                .appendQueryParameter(PopularMoviesConstants.THE_MOVIE_DB_API_KEY_PARAMETER, PopularMoviesConstants.THE_MOVIE_DB_API_KEY_VALUE)
+                .build();
 
         URL url = null;
         try {

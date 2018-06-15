@@ -11,4 +11,6 @@ public class FilmJSonConstants {
     public static final String OVERVIEW = "overview";
     public static final String VOTE_AVERAGE = "vote_average";
     public static final String RELEASE_DATE = "release_date";
+    public static final String AUTHOR = "author";
+    public static final String CONTENT = "content";
 }

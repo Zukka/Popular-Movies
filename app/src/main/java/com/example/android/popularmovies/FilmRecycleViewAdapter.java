@@ -28,6 +28,7 @@ public class FilmRecycleViewAdapter extends RecyclerView.Adapter<FilmRecycleView
             filmImage = itemView.findViewById(R.id.film_photo);
         }
     }
+
     @Override
     public FilmsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
@@ -40,18 +41,13 @@ public class FilmRecycleViewAdapter extends RecyclerView.Adapter<FilmRecycleView
     @Override
     public void onBindViewHolder(FilmsViewHolder holder, int position) {
         final Film film = mFilmData.get(position);
-        Picasso.with( mContext ).load( film.PosterURL).into( holder.filmImage );
+        Picasso.with( mContext ).load( film.getPosterURL()).into( holder.filmImage );
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intentShowDetails = new Intent(mContext, DetailsActivity.class);
-                intentShowDetails.putExtra("FilmId", film.Id);
-                intentShowDetails.putExtra("FilmName", film.Title);
-                intentShowDetails.putExtra("FilmPosterURL", film.PosterURL);
-                intentShowDetails.putExtra("FilmOverView", film.OverView);
-                intentShowDetails.putExtra("FilmVoteAverage", film.VoteAverage);
-                intentShowDetails.putExtra("FilmReleaseDate", film.ReleaseDate);
+                intentShowDetails.putExtra("film", film);
                 mContext.startActivity(intentShowDetails);
             }
         });

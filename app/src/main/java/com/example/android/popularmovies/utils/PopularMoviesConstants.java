@@ -14,10 +14,10 @@ public class PopularMoviesConstants {
     public static final String THE_MOVIE_DB_TOP_RATE_ENDPOINT = "/movie/top_rated";
 
     public static final String THE_MOVIE_DB_BASE_FETCH_REQUEST = "/movie/";
-    public static final String THE_MOVIE_DB_VIDEOS_FETCH_REQUEST = "/videos/";
-    public static final String THE_MOVIE_DB_REVIEWS_FETCH_REQUEST = "/reviews/";
+    public static final String THE_MOVIE_DB_VIDEOS_FETCH_REQUEST = "/videos";
+    public static final String THE_MOVIE_DB_REVIEWS_FETCH_REQUEST = "/reviews";
 
-    public static final String THE_MOVIE_DB_API_KEY_VALUE = "YOUR_API_KEY";
+    public static final String THE_MOVIE_DB_API_KEY_VALUE = "YOUR_APY_KEY";
     public static final String THE_MOVIE_DB_API_KEY_PARAMETER = "api_key";
 
     public static final String youTubeBaseURL = "http://www.youtube.com/watch?v=";

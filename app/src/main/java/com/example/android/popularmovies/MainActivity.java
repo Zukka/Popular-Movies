@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
                         .getResponseFromHttpUrl(movieRequestUrl);
 
                 List<Film> simpleJsonFilsData = TheMovieDbJsonUtils
-                        .getSimpleFilmsStringsFromJson(MainActivity.this, jsonMoviesResponse);
+                        .getSimpleFilmsStringsFromJson(jsonMoviesResponse);
 
                 return simpleJsonFilsData;
 
@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
                 filmRecycleViewAdapter.setFilmData(movieData);
                 filmRecyclerView.setAdapter(filmRecycleViewAdapter);
             } else {
-                Toast.makeText(MainActivity.this, getString(R.string.loadFailed), Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, getString(R.string.loadFilmsFailed), Toast.LENGTH_LONG).show();
             }
         }
     }
