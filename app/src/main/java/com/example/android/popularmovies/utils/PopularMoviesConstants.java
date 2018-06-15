@@ -17,7 +17,7 @@ public class PopularMoviesConstants {
     public static final String theMovieDbVideosFetchRequest = "/videos/";
     public static final String theMovieDbReviewsFetchRequest = "/reviews/";
 
-    public static final String theMovieDbApiKEYValue = "8fe8aca1d925f8e7f0ab1fcebe52ff00";
+    public static final String theMovieDbApiKEYValue = "YOUR_API_KEy";
     public static final String theMovieDbApiKEYParameter = "api_key";
 
     public static final String youTubeBaseURL = "http://www.youtube.com/watch?v=";
