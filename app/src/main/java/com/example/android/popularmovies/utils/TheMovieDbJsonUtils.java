@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.example.android.popularmovies.Film;
 import com.example.android.popularmovies.Review;
+import com.example.android.popularmovies.Trailers;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -90,5 +91,38 @@ public class TheMovieDbJsonUtils {
             parsedReviewData.add(review);
         }
         return  parsedReviewData;
+    }
+
+    public static List<Trailers> getSimpleTrailerStringsFromJson(String jsonTrailerResponse) throws  JSONException {
+
+        final String OWM_MESSAGE_CODE = "cod";
+        final String TRAILER_LIST = "results";
+
+        JSONObject trialerJson = new JSONObject(jsonTrailerResponse);
+        List<Trailers> parsedTrailerData;
+        if (trialerJson.has(OWM_MESSAGE_CODE)) {
+            int errorCode = trialerJson.getInt(OWM_MESSAGE_CODE);
+
+            switch (errorCode) {
+                case HttpURLConnection.HTTP_OK:
+                    break;
+                case HttpURLConnection.HTTP_NOT_FOUND:
+                    /* Location invalid */
+                    return null;
+                default:
+                    /* Server probably down */
+                    return null;
+            }
+        }
+
+        JSONArray trailerArray = trialerJson.getJSONArray(TRAILER_LIST);
+        parsedTrailerData = new ArrayList<>();
+        for (int i = 0; i < trailerArray.length(); i++) {
+            JSONObject filmObject = trailerArray.getJSONObject(i);
+            String key = filmObject.get(FilmJSonConstants.KEY).toString();
+            Trailers trailer = new Trailers(key);
+            parsedTrailerData.add(trailer);
+        }
+        return  parsedTrailerData;
     }
 }

@@ -5,4 +5,6 @@
     <dimen name="details_padding">16dp</dimen>
     <dimen name="movie_cover_height">160dp</dimen>
     <dimen name="button_padding">16dp</dimen>
+    <dimen name="review_card_horizontal_margin">4dp</dimen>
+    <dimen name="review_card_vertical_margin">2dp</dimen>
 </resources>

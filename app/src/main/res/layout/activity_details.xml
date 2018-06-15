@@ -109,6 +109,19 @@
                 android:clipToPadding="false"
                 android:scrollbars="vertical"
                 android:visibility="gone"/>
+
+            <TextView
+                android:id="@+id/no_trailer_textview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:fontFamily="casual"
+                android:textStyle="bold"
+                android:text="@string/no_trailer"
+                android:visibility="gone"/>
+
     </LinearLayout>
 </ScrollView>
 </android.support.constraint.ConstraintLayout>

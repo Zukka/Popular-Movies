@@ -13,4 +13,5 @@ public class FilmJSonConstants {
     public static final String RELEASE_DATE = "release_date";
     public static final String AUTHOR = "author";
     public static final String CONTENT = "content";
+    public static final String KEY = "key";
 }

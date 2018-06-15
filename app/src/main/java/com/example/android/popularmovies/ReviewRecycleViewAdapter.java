@@ -40,7 +40,8 @@ public class ReviewRecycleViewAdapter extends RecyclerView.Adapter<ReviewRecycle
     @Override
     public void onBindViewHolder(ReviewViewHolder holder, int position) {
         final Review review = mFilmReview.get(position);
-        holder.authorReview.setText();
+        holder.authorReview.setText(review.Author);
+        holder.contentReview.setText(review.Content);
     }
 
     @Override

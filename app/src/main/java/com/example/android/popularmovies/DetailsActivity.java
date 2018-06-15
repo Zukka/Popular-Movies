@@ -14,20 +14,26 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.android.popularmovies.utils.NetworkUtils;
+import com.example.android.popularmovies.utils.TheMovieDbJsonUtils;
 import com.squareup.picasso.Picasso;
 
+import java.net.URL;
 import java.util.List;
 
 public class DetailsActivity extends AppCompatActivity {
 
     Film film;
+    private TextView noTrailerFound;
     private RecyclerView trailerRecyclerView;
-  //  private TrailerRecycleViewAdapter trailerRecyclerViewAdapter;
+    private TrailerRecycleViewAdapter trailerRecyclerViewAdapter;
     private LinearLayoutManager trailerLinearLayoutManager;
     private ProgressBar trailerProgressBar;
     String filmTitle, filmPosterURL, filmOverView, filmVoteAverage, filmReleaseDate;
     int filmId;
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
@@ -55,6 +61,7 @@ public class DetailsActivity extends AppCompatActivity {
         ImageView _filmPoster = findViewById(R.id.detailFilmImage);
         Picasso.with(this).load(filmPosterURL).into(_filmPoster);
 
+        noTrailerFound = findViewById(R.id.no_trailer_textview);
         trailerProgressBar = findViewById(R.id.trailerProgressBar);
         trailerRecyclerView = findViewById(R.id.trailers_recycled_view);
         trailerRecyclerView.setHasFixedSize(true);
@@ -62,7 +69,10 @@ public class DetailsActivity extends AppCompatActivity {
         trailerRecyclerView.setLayoutManager(trailerLinearLayoutManager);
         trailerRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        new RequestTrailersMovies().execute();
+        new RequestTrailersMovies().execute(film.getId());
+
+        trailerRecyclerViewAdapter = new TrailerRecycleViewAdapter(this);
+        trailerRecyclerView.setAdapter(trailerRecyclerViewAdapter);
     }
 
     @Override
@@ -94,7 +104,7 @@ public class DetailsActivity extends AppCompatActivity {
         }
     }
 
-    public class RequestTrailersMovies extends AsyncTask<String, Void, List<Trailers>> {
+    public class RequestTrailersMovies extends AsyncTask<Integer, Void, List<Trailers>> {
 
         @Override
         protected void onPreExecute() {
@@ -104,8 +114,44 @@ public class DetailsActivity extends AppCompatActivity {
         }
 
         @Override
-        protected List<Trailers> doInBackground(String... strings) {
-            return null;
+        protected List<Trailers> doInBackground(Integer... params) {
+
+            if (params.length == 0) {
+                return null;
+            }
+
+
+            int filmID = params[0];
+            URL trailerRequestUrl = NetworkUtils.buildRequestTrailerUrl(filmID);
+
+
+            try {
+                String jsonTrailerResponse = NetworkUtils
+                        .getResponseFromHttpUrl(trailerRequestUrl);
+
+                List<Trailers> simpleJsonFilsData = TheMovieDbJsonUtils
+                        .getSimpleTrailerStringsFromJson(jsonTrailerResponse);
+
+                return simpleJsonFilsData;
+            } catch (Exception e) {
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(List<Trailers> trailerData) {
+            isProgressBarVisible(false);
+            if (trailerData != null) {
+                if (trailerData.size() == 0)
+                    noTrailerFound.setVisibility(View.VISIBLE);
+                else {
+                    trailerRecyclerView.setVisibility(View.VISIBLE);
+                    trailerRecyclerViewAdapter.setFilmData(trailerData);
+                    trailerRecyclerView.setAdapter(trailerRecyclerViewAdapter);
+                }
+            } else {
+                Toast.makeText(DetailsActivity.this, getString(R.string.loadTrailerFailed), Toast.LENGTH_LONG).show();
+            }
         }
     }
 }

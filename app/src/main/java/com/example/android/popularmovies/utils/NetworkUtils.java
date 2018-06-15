@@ -53,6 +53,28 @@ public class NetworkUtils {
         return url;
     }
 
+    public static URL buildRequestTrailerUrl(int movieID) {
+
+        String baseURL =
+                PopularMoviesConstants.THE_MOVIE_DB_BASE_URL +
+                        PopularMoviesConstants.THE_MOVIE_DB_BASE_FETCH_REQUEST +
+                        movieID +
+                        PopularMoviesConstants.THE_MOVIE_DB_VIDEOS_FETCH_REQUEST;
+
+
+        Uri builtUri = Uri.parse(baseURL).buildUpon()
+                .appendQueryParameter(PopularMoviesConstants.THE_MOVIE_DB_API_KEY_PARAMETER, PopularMoviesConstants.THE_MOVIE_DB_API_KEY_VALUE)
+                .build();
+
+        URL url = null;
+        try {
+            url = new URL(builtUri.toString());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        return url;
+    }
+
     public static String getResponseFromHttpUrl(URL url) throws IOException {
         HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
         try {
