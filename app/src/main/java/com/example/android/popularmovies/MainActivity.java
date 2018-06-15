@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private GridLayoutManager gridLayoutManager;
     private ProgressBar loadingDataProgressBar;
 
+    private static final String LIFECYCLE_CALLBACKS_TEXT_KEY = "callbacks"; // Vedi lifecycle -7
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
