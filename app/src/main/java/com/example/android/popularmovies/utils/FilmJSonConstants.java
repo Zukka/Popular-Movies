@@ -5,9 +5,10 @@ package com.example.android.popularmovies.utils;
  */
 
 public class FilmJSonConstants {
-    public static final String Title = "title";
-    public static final String Poster = "poster_path";
-    public static final String OverView = "overview";
-    public static final String VoteAverage = "vote_average";
-    public static final String ReleaseDate = "release_date";
+    public static final String ID = "id";
+    public static final String TITLE = "title";
+    public static final String POSTER = "poster_path";
+    public static final String OVERVIEW = "overview";
+    public static final String VOTE_AVERAGE = "vote_average";
+    public static final String RELEASE_DATE = "release_date";
 }

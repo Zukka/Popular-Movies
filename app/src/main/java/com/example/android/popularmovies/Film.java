@@ -9,14 +9,16 @@ import android.widget.BaseAdapter;
  */
 
 public class Film {
+    String Id;
     String Title;
     String PosterURL;
     String OverView;
     String VoteAverage;
     String ReleaseDate;
 
-    public Film(String Title, String PosterURL, String OverView, String VoteAverage, String ReleaseDate)
+    public Film(String Id, String Title, String PosterURL, String OverView, String VoteAverage, String ReleaseDate)
     {
+        this.Id = Id;
         this.Title = Title;
         this.PosterURL = PosterURL;
         this.OverView = OverView;

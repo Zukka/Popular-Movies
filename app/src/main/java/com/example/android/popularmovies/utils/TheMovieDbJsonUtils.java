@@ -46,13 +46,14 @@ public class TheMovieDbJsonUtils {
         for (int i = 0; i < filmArray.length(); i++) {
             JSONObject filmObject = filmArray.getJSONObject(i);
 
-           String FilmTitle = filmObject.get(FilmJSonConstants.Title).toString();
-           String FilmPoster = PopularMoviesConstants.imageBaseURL + PopularMoviesConstants.imageSizeURL + filmObject.get(FilmJSonConstants.Poster).toString();
-           String FilmOverView = filmObject.get(FilmJSonConstants.OverView).toString();
-           String FilmVoteAverage = filmObject.get(FilmJSonConstants.VoteAverage).toString();
-           String FilmReleaseDate = filmObject.get(FilmJSonConstants.ReleaseDate).toString();
-           Film film = new Film(FilmTitle, FilmPoster, FilmOverView, FilmVoteAverage, FilmReleaseDate);
-           parsedFilmData.add(film);
+            String FilmId = filmObject.get(FilmJSonConstants.ID).toString();
+            String FilmTitle = filmObject.get(FilmJSonConstants.TITLE).toString();
+            String FilmPoster = PopularMoviesConstants.IMAGE_BASE_URL + PopularMoviesConstants.IMAGE_SIZE_URL + filmObject.get(FilmJSonConstants.POSTER).toString();
+            String FilmOverView = filmObject.get(FilmJSonConstants.OVERVIEW).toString();
+            String FilmVoteAverage = filmObject.get(FilmJSonConstants.VOTE_AVERAGE).toString();
+            String FilmReleaseDate = filmObject.get(FilmJSonConstants.RELEASE_DATE).toString();
+            Film film = new Film(FilmId, FilmTitle, FilmPoster, FilmOverView, FilmVoteAverage, FilmReleaseDate);
+            parsedFilmData.add(film);
         }
         return parsedFilmData;
     }

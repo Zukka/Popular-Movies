@@ -15,11 +15,11 @@ import java.util.Scanner;
 
 public class NetworkUtils {
 
-    public static URL buildUrl(String endpointURL) {
+    public static URL buildRequestMoviesUrl(String endpointURL) {
 
-        String baseURL = PopularMoviesConstants.theMovieDbBaseURL + endpointURL;
+        String baseURL = PopularMoviesConstants.THE_MOVIE_DB_BASE_URL + endpointURL;
         Uri builtUri = Uri.parse(baseURL).buildUpon()
-                .appendQueryParameter(PopularMoviesConstants.theMovieDbApiKEYParameter, PopularMoviesConstants.theMovieDbApiKEYValue)
+                .appendQueryParameter(PopularMoviesConstants.THE_MOVIE_DB_API_KEY_PARAMETER, PopularMoviesConstants.THE_MOVIE_DB_API_KEY_VALUE)
                 .build();
 
         URL url = null;
@@ -28,7 +28,27 @@ public class NetworkUtils {
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
-        System.out.println(url);
+        return url;
+    }
+
+    public static URL buildRequestReviewsUrl(String movieID) {
+
+        String baseURL =
+                        PopularMoviesConstants.THE_MOVIE_DB_BASE_URL +
+                        PopularMoviesConstants.THE_MOVIE_DB_BASE_FETCH_REQUEST +
+                        movieID +
+                        PopularMoviesConstants.THE_MOVIE_DB_REVIEWS_FETCH_REQUEST;
+
+        System.out.println(baseURL);
+
+        Uri builtUri = Uri.parse(baseURL).buildUpon().build();
+
+        URL url = null;
+        try {
+            url = new URL(builtUri.toString());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
         return url;
     }
 

@@ -6,19 +6,19 @@ package com.example.android.popularmovies.utils;
 
 public class PopularMoviesConstants {
 
-    public static final String imageBaseURL = "http://image.tmdb.org/t/p/";
-    public static final String imageSizeURL = "w185";
+    public static final String IMAGE_BASE_URL = "http://image.tmdb.org/t/p/";
+    public static final String IMAGE_SIZE_URL = "w185";
 
-    public static final String theMovieDbBaseURL = "http://api.themoviedb.org/3";
-    public static final String theMovieDbPopularEndPoint = "/movie/popular";
-    public static final String theMovieDbTopRateEndPoint = "/movie/top_rated";
+    public static final String THE_MOVIE_DB_BASE_URL = "http://api.themoviedb.org/3";
+    public static final String THE_MOVIE_DB_POPULAR_ENDPOINT = "/movie/popular";
+    public static final String THE_MOVIE_DB_TOP_RATE_ENDPOINT = "/movie/top_rated";
 
-    public static final String theMovieDbBaseFetchRequest = "/movie/";
-    public static final String theMovieDbVideosFetchRequest = "/videos/";
-    public static final String theMovieDbReviewsFetchRequest = "/reviews/";
+    public static final String THE_MOVIE_DB_BASE_FETCH_REQUEST = "/movie/";
+    public static final String THE_MOVIE_DB_VIDEOS_FETCH_REQUEST = "/videos/";
+    public static final String THE_MOVIE_DB_REVIEWS_FETCH_REQUEST = "/reviews/";
 
-    public static final String theMovieDbApiKEYValue = "YOUR_API_KEy";
-    public static final String theMovieDbApiKEYParameter = "api_key";
+    public static final String THE_MOVIE_DB_API_KEY_VALUE = "YOUR_API_KEY";
+    public static final String THE_MOVIE_DB_API_KEY_PARAMETER = "api_key";
 
     public static final String youTubeBaseURL = "http://www.youtube.com/watch?v=";
 }

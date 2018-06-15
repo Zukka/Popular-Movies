@@ -78,11 +78,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void loadMoviesData() {
         SharedPreferences popularMoviesPrefs = getSharedPreferences("PopularMovies_Prefs", Context.MODE_PRIVATE);
-        String endPointOrder = popularMoviesPrefs.getString("ENDPOINT", PopularMoviesConstants.theMovieDbPopularEndPoint);
-        new RequestFavoriteMovies().execute(endPointOrder);
+        String endPointOrder = popularMoviesPrefs.getString("ENDPOINT", PopularMoviesConstants.THE_MOVIE_DB_POPULAR_ENDPOINT);
+        new RequestMovies().execute(endPointOrder);
     }
 
-    public class RequestFavoriteMovies extends AsyncTask<String, Void, List<Film>> {
+    public class RequestMovies extends AsyncTask<String, Void, List<Film>> {
 
         @Override
         protected void onPreExecute() {
@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
             String endPointURL = params[0];
-            URL movieRequestUrl = NetworkUtils.buildUrl(endPointURL);
+            URL movieRequestUrl = NetworkUtils.buildRequestMoviesUrl(endPointURL);
 
             try {
                 String jsonMoviesResponse = NetworkUtils
@@ -111,8 +111,6 @@ public class MainActivity extends AppCompatActivity {
                 return simpleJsonFilsData;
 
             } catch (Exception e) {
-                String message = e.getLocalizedMessage();
-                Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG).show();
                 return null;
             }
         }

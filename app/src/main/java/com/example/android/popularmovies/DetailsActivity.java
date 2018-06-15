@@ -25,11 +25,13 @@ public class DetailsActivity extends AppCompatActivity {
   //  private TrailerRecycleViewAdapter trailerRecyclerViewAdapter;
     private LinearLayoutManager trailerLinearLayoutManager;
     private ProgressBar trailerProgressBar;
+    String filmId;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
         Intent detailsIntent = getIntent();
+        filmId = detailsIntent.getStringExtra("FilmId");
         String filmTitle = detailsIntent.getStringExtra("FilmName");
         String filmPosterURL = detailsIntent.getStringExtra("FilmPosterURL");
         String filmOverView = detailsIntent.getStringExtra("FilmOverView");
@@ -75,6 +77,7 @@ public class DetailsActivity extends AppCompatActivity {
 
         if (id == R.id.action_review) {
             Intent intent = new Intent(this, ReviewsActivity.class);
+            intent.putExtra("FilmID", filmId);
             startActivity(intent);
             return true;
         }

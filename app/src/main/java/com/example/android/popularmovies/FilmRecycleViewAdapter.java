@@ -46,6 +46,7 @@ public class FilmRecycleViewAdapter extends RecyclerView.Adapter<FilmRecycleView
             @Override
             public void onClick(View v) {
                 Intent intentShowDetails = new Intent(mContext, DetailsActivity.class);
+                intentShowDetails.putExtra("FilmId", film.Id);
                 intentShowDetails.putExtra("FilmName", film.Title);
                 intentShowDetails.putExtra("FilmPosterURL", film.PosterURL);
                 intentShowDetails.putExtra("FilmOverView", film.OverView);
