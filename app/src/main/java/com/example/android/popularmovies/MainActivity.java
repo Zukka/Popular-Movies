@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
@@ -18,17 +17,13 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.example.android.popularmovies.utils.FilmJSonConstants;
 import com.example.android.popularmovies.utils.NetworkUtils;
 import com.example.android.popularmovies.utils.PopularMoviesConstants;
 import com.example.android.popularmovies.utils.TheMovieDbJsonUtils;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -153,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
                 filmRecyclerView.setAdapter(filmRecycleViewAdapter);
             } else {
                 if (currentEndPoint.equals(PopularMoviesConstants.THE_MOVIE_DB_LOCAL_DATABASE_ENDPOINT))
-                    Toast.makeText(MainActivity.this, getString(R.string.noFavoriteFilms), Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this, getString(R.string.no_favoritefilms), Toast.LENGTH_LONG).show();
                 else
                     Toast.makeText(MainActivity.this, getString(R.string.loadFilmsFailed), Toast.LENGTH_LONG).show();
             }

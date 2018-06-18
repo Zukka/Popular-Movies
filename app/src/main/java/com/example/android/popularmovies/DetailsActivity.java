@@ -32,11 +32,15 @@ public class DetailsActivity extends AppCompatActivity {
     private TrailerRecycleViewAdapter trailerRecyclerViewAdapter;
     private LinearLayoutManager trailerLinearLayoutManager;
     private ProgressBar trailerProgressBar;
+    private AppDatabase mDb;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
+
+        mDb = AppDatabase.getInstance(getApplicationContext());
+
         if (savedInstanceState == null) {
             Intent detailsIntent = getIntent();
             film = detailsIntent.getParcelableExtra("film");
@@ -156,6 +160,48 @@ public class DetailsActivity extends AppCompatActivity {
             } else {
                 Toast.makeText(DetailsActivity.this, getString(R.string.loadTrailerFailed), Toast.LENGTH_LONG).show();
             }
+        }
+    }
+
+    public class AddFavorite extends AsyncTask<Integer, Void, Boolean> {
+        private Favorite favorite;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+             favorite = new Favorite(
+                    film.getId(),
+                    film.getTitle(),
+                    film.getPosterURL(),
+                    film.getOverView(),
+                    film.getVoteAverage(),
+                    film.getReleaseDate());
+        }
+
+        @Override
+        protected Boolean doInBackground(Integer... params) {
+
+            if (params.length == 0) {
+                return null;
+            }
+            int filmID = params[0];
+            Favorite result = mDb.favoriteDao().findByFilmId(filmID);
+            if (result != null)
+                return false;
+            else
+                mDb.favoriteDao().insertFilm(favorite);
+                return true;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            super.onPostExecute(aBoolean);
+            if (aBoolean == null) {
+                Toast.makeText(DetailsActivity.this, getString(R.string.no_favoritefilms), Toast.LENGTH_LONG).show();
+            } else if (aBoolean)
+                    Toast.makeText(DetailsActivity.this, getString(R.string.add_favorite_success), Toast.LENGTH_LONG).show();
+                else
+                    Toast.makeText(DetailsActivity.this, getString(R.string.add_favotite_fail), Toast.LENGTH_LONG).show();
         }
     }
 }

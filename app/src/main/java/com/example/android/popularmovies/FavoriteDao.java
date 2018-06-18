@@ -14,7 +14,7 @@ public interface FavoriteDao {
     List<Favorite> getAllFavorites();
 
     @Query("SELECT * FROM favorite WHERE id LIKE :first LIMIT 1")
-    Favorite findByFilmId(String first);
+    Favorite findByFilmId(int first);
 
     @Insert
     void insertFilm(Favorite favorite);

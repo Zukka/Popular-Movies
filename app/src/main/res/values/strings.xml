@@ -17,5 +17,8 @@
     <string name="no_review">No review for this film</string>
     <string name="no_trailer">No trailer for this film</string>
     <string name="trailer">Trailer</string>
-    <string name="noFavoriteFilms">No favorite film are stored.</string>
+    <string name="no_favoritefilms">No favorite film are stored.</string>
+    <string name="error_favorite">Error in execute Add Favorite function</string>
+    <string name="add_favorite_success">Film added to favorite list</string>
+    <string name="add_favotite_fail">Film is already present in favorite list</string>
 </resources>
