@@ -11,13 +11,13 @@ import java.util.List;
 public interface FavoriteDao {
 
     @Query("SELECT * FROM favorite")
-    List<Favorite> getAll();
+    List<Favorite> getAllFavorites();
 
     @Query("SELECT * FROM favorite WHERE id LIKE :first LIMIT 1")
     Favorite findByFilmId(String first);
 
     @Insert
-    void insertFilm(Favorite... favorites);
+    void insertFilm(Favorite favorite);
 
     @Delete
     void deleteFilm(Favorite favorite);

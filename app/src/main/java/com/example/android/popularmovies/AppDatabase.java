@@ -1,10 +1,25 @@
 package com.example.android.popularmovies;
 
 import android.arch.persistence.room.Database;
+import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
+import android.content.Context;
 
 @Database(entities = {Favorite.class}, version = 1)
-
 public abstract class AppDatabase extends RoomDatabase {
-    public abstract FavoriteDao favoriteDao();
+
+    private static final Object LOCK = new Object();
+    private static final String DATABASE_NAME = "favoritefilms";
+    private static AppDatabase sInstance;
+
+    public static AppDatabase getInstance(Context context) {
+        if (sInstance == null) {
+            synchronized (LOCK) {
+                sInstance = Room.databaseBuilder(context.getApplicationContext(),
+                        AppDatabase.class, AppDatabase.DATABASE_NAME)
+                        .build();
+            }
+        }
+        return sInstance;
+    }
 }
