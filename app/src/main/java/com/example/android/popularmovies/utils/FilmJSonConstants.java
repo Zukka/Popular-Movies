@@ -5,6 +5,7 @@ package com.example.android.popularmovies.utils;
  */
 
 public class FilmJSonConstants {
+    public static final String FILM = "film";
     public static final String ID = "id";
     public static final String TITLE = "title";
     public static final String POSTER = "poster_path";
