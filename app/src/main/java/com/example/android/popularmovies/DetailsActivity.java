@@ -16,6 +16,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.android.popularmovies.utils.FilmJSonConstants;
 import com.example.android.popularmovies.utils.NetworkUtils;
 import com.example.android.popularmovies.utils.TheMovieDbJsonUtils;
 import com.squareup.picasso.Picasso;
@@ -34,17 +35,20 @@ public class DetailsActivity extends AppCompatActivity {
     String filmTitle, filmPosterURL, filmOverView, filmVoteAverage, filmReleaseDate;
     int filmId;
 
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
-        Intent detailsIntent = getIntent();
-        film = detailsIntent.getParcelableExtra("film");
-        filmId = film.getId();
-        filmTitle = film.getTitle();
-        filmPosterURL = film.getPosterURL();
-        filmOverView = film.getOverView();
-        filmVoteAverage = film.getVoteAverage();
-        filmReleaseDate = film.getReleaseDate();
+        if (savedInstanceState == null) {
+            Intent detailsIntent = getIntent();
+            film = detailsIntent.getParcelableExtra("film");
+            filmId = film.getId();
+            filmTitle = film.getTitle();
+            filmPosterURL = film.getPosterURL();
+            filmOverView = film.getOverView();
+            filmVoteAverage = film.getVoteAverage();
+            filmReleaseDate = film.getReleaseDate();
+        }
 
         TextView _filmTitle = findViewById(R.id.detailFilmTitle);
         _filmTitle.setText(filmTitle);
@@ -73,6 +77,26 @@ public class DetailsActivity extends AppCompatActivity {
 
         trailerRecyclerViewAdapter = new TrailerRecycleViewAdapter(this);
         trailerRecyclerView.setAdapter(trailerRecyclerViewAdapter);
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        filmTitle = savedInstanceState.getString(FilmJSonConstants.TITLE);
+        filmPosterURL = savedInstanceState.getString(FilmJSonConstants.POSTER);
+        filmOverView = savedInstanceState.getString(FilmJSonConstants.OVERVIEW);
+        filmVoteAverage = savedInstanceState.getString(FilmJSonConstants.VOTE_AVERAGE);
+        filmReleaseDate = savedInstanceState.getString(FilmJSonConstants.RELEASE_DATE);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(FilmJSonConstants.TITLE, filmTitle);
+        outState.putString(FilmJSonConstants.POSTER, filmPosterURL);
+        outState.putString(FilmJSonConstants.OVERVIEW, filmOverView);
+        outState.putString(FilmJSonConstants.VOTE_AVERAGE, filmVoteAverage);
+        outState.putString(FilmJSonConstants.RELEASE_DATE, filmReleaseDate);
     }
 
     @Override

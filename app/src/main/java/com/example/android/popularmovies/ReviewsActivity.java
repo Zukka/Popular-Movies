@@ -3,10 +3,12 @@ package com.example.android.popularmovies;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -33,7 +35,6 @@ public class ReviewsActivity extends AppCompatActivity {
 
         Intent detailsIntent = getIntent();
         film = detailsIntent.getParcelableExtra("film");
-
         loadingReviewsProgressBar = findViewById(R.id.review_progressbar);
         noReviewFound = findViewById(R.id.no_review_textview);
         reviewRecycledView = findViewById(R.id.reviews_recycled_view);
@@ -46,6 +47,18 @@ public class ReviewsActivity extends AppCompatActivity {
 
         reviewRecycleViewAdapter = new ReviewRecycleViewAdapter(this);
         reviewRecycledView.setAdapter(reviewRecycleViewAdapter);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Intent intent = NavUtils.getParentActivityIntent(this);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                NavUtils.navigateUpTo(this, intent);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void isProgressBarVisible(boolean isVisible) {
