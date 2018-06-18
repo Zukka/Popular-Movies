@@ -15,7 +15,9 @@ import com.example.android.popularmovies.utils.PopularMoviesConstants;
 
 public class SettingsActivity extends AppCompatActivity {
 
-    RadioButton popular, rating;
+    private String endpoint = "ENDPOINT";
+
+    RadioButton popular, rating, favorite;
     SharedPreferences popularMoviesPrefs;
     SharedPreferences.Editor prefEditor;
     @Override
@@ -24,6 +26,7 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
         popular = findViewById(R.id.radio_popular);
         rating = findViewById(R.id.radio_rating);
+        favorite = findViewById(R.id.radio_favorites);
 
         popularMoviesPrefs = getSharedPreferences("PopularMovies_Prefs", Context.MODE_PRIVATE);
         String selectedEndPoint = popularMoviesPrefs.getString("ENDPOINT", PopularMoviesConstants.THE_MOVIE_DB_POPULAR_ENDPOINT);
@@ -32,10 +35,11 @@ public class SettingsActivity extends AppCompatActivity {
 
     private void SelectedRadioButton(String selectedEndPoint) {
         if (selectedEndPoint.equals(PopularMoviesConstants.THE_MOVIE_DB_POPULAR_ENDPOINT)) {
-
             popular.setChecked(true);
-        } else {
+        } else if (selectedEndPoint.equals(PopularMoviesConstants.THE_MOVIE_DB_TOP_RATE_ENDPOINT)){
             rating.setChecked(true);
+        } else {
+            favorite.setChecked(true);
         }
 
     }
@@ -47,17 +51,23 @@ public class SettingsActivity extends AppCompatActivity {
         switch(view.getId()) {
             case R.id.radio_popular:
                 if (checked) {
-                    prefEditor.putString("ENDPOINT", PopularMoviesConstants.THE_MOVIE_DB_POPULAR_ENDPOINT);
+                    prefEditor.putString(endpoint, PopularMoviesConstants.THE_MOVIE_DB_POPULAR_ENDPOINT);
                     prefEditor.commit();
                 }
                 break;
 
             case R.id.radio_rating:
                 if (checked) {
-                    prefEditor.putString("ENDPOINT", PopularMoviesConstants.THE_MOVIE_DB_TOP_RATE_ENDPOINT);
+                    prefEditor.putString(endpoint, PopularMoviesConstants.THE_MOVIE_DB_TOP_RATE_ENDPOINT);
                     prefEditor.commit();
                 }
                 break;
+
+            case R.id.radio_favorites:
+                if (checked) {
+                    prefEditor.putString(endpoint, PopularMoviesConstants.THE_MOVIE_DB_LOCAL_DATABASE_ENDPOINT);
+                    prefEditor.commit();
+                }
         }
     }
 }

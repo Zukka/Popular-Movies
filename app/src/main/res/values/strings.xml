@@ -17,4 +17,5 @@
     <string name="no_review">No review for this film</string>
     <string name="no_trailer">No trailer for this film</string>
     <string name="trailer">Trailer</string>
+    <string name="noFavoriteFilms">No favorite film are stored.</string>
 </resources>

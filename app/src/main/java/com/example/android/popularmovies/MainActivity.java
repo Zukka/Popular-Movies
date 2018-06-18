@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
@@ -17,12 +18,17 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.android.popularmovies.utils.FilmJSonConstants;
 import com.example.android.popularmovies.utils.NetworkUtils;
 import com.example.android.popularmovies.utils.PopularMoviesConstants;
 import com.example.android.popularmovies.utils.TheMovieDbJsonUtils;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -30,12 +36,15 @@ public class MainActivity extends AppCompatActivity {
     private FilmRecycleViewAdapter filmRecycleViewAdapter;
     private GridLayoutManager gridLayoutManager;
     private ProgressBar loadingDataProgressBar;
+    private AppDatabase mDb;
+    private String currentEndPoint;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mDb = AppDatabase.getInstance(getApplicationContext());
         loadingDataProgressBar = findViewById(R.id.progressBar);
         filmRecyclerView = findViewById(R.id.films_recycled_view);
         filmRecyclerView.setHasFixedSize(true);
@@ -78,8 +87,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void loadMoviesData() {
         SharedPreferences popularMoviesPrefs = getSharedPreferences("PopularMovies_Prefs", Context.MODE_PRIVATE);
-        String endPointOrder = popularMoviesPrefs.getString("ENDPOINT", PopularMoviesConstants.THE_MOVIE_DB_POPULAR_ENDPOINT);
-        new RequestMovies().execute(endPointOrder);
+        currentEndPoint = popularMoviesPrefs.getString("ENDPOINT", PopularMoviesConstants.THE_MOVIE_DB_POPULAR_ENDPOINT);
+        new RequestMovies().execute(currentEndPoint);
     }
 
     public class RequestMovies extends AsyncTask<String, Void, List<Film>> {
@@ -97,21 +106,41 @@ public class MainActivity extends AppCompatActivity {
             if (params.length == 0) {
                 return null;
             }
-
             String endPointURL = params[0];
-            URL movieRequestUrl = NetworkUtils.buildRequestMoviesUrl(endPointURL);
+            if (endPointURL != PopularMoviesConstants.THE_MOVIE_DB_LOCAL_DATABASE_ENDPOINT) {
+                URL movieRequestUrl = NetworkUtils.buildRequestMoviesUrl(endPointURL);
 
-            try {
-                String jsonMoviesResponse = NetworkUtils
-                        .getResponseFromHttpUrl(movieRequestUrl);
+                try {
+                    String jsonMoviesResponse = NetworkUtils
+                            .getResponseFromHttpUrl(movieRequestUrl);
 
-                List<Film> simpleJsonFilsData = TheMovieDbJsonUtils
-                        .getSimpleFilmsStringsFromJson(jsonMoviesResponse);
+                    List<Film> simpleJsonFilsData = TheMovieDbJsonUtils
+                            .getSimpleFilmsStringsFromJson(jsonMoviesResponse);
 
-                return simpleJsonFilsData;
+                    return simpleJsonFilsData;
 
-            } catch (Exception e) {
-                return null;
+                } catch (Exception e) {
+                    return null;
+                }
+            } else {
+                List<Favorite> favoriteData = mDb.favoriteDao().getAllFavorites();
+                if (favoriteData != null) {
+                    List<Film> filmData = new ArrayList<>();;
+                    for (Favorite favoriteFilm : favoriteData) {
+                        Film film = new Film(
+                                favoriteFilm.getFilmId(),
+                                favoriteFilm.getFilmTitle(),
+                                favoriteFilm.getFilmPosterUrl(),
+                                favoriteFilm.getFilmOverView(),
+                                favoriteFilm.getFilmVoteAverage(),
+                                favoriteFilm.getFilmReleaseDate()
+                        );
+                        filmData.add(film);
+                    }
+                    return filmData;
+                } else {
+                    return null;
+                }
             }
         }
 
@@ -123,7 +152,10 @@ public class MainActivity extends AppCompatActivity {
                 filmRecycleViewAdapter.setFilmData(movieData);
                 filmRecyclerView.setAdapter(filmRecycleViewAdapter);
             } else {
-                Toast.makeText(MainActivity.this, getString(R.string.loadFilmsFailed), Toast.LENGTH_LONG).show();
+                if (currentEndPoint.equals(PopularMoviesConstants.THE_MOVIE_DB_LOCAL_DATABASE_ENDPOINT))
+                    Toast.makeText(MainActivity.this, getString(R.string.noFavoriteFilms), Toast.LENGTH_LONG).show();
+                else
+                    Toast.makeText(MainActivity.this, getString(R.string.loadFilmsFailed), Toast.LENGTH_LONG).show();
             }
         }
     }
