@@ -13,12 +13,9 @@ public interface FavoriteDao {
     @Query("SELECT * FROM favorite")
     List<Favorite> getAllFavorites();
 
-    @Query("SELECT * FROM favorite WHERE id LIKE :first LIMIT 1")
+    @Query("SELECT * FROM favorite WHERE film_id = :first LIMIT 1")
     Favorite findByFilmId(int first);
 
     @Insert
     void insertFilm(Favorite favorite);
-
-    @Delete
-    void deleteFilm(Favorite favorite);
 }

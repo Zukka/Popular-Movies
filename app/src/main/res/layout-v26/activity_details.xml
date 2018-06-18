@@ -65,6 +65,17 @@
                         android:fontFamily="casual"
                         android:textStyle="bold"
                         />
+
+                    <Button
+                        android:id="@+id/favoriteButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/mark_favorite"
+                        android:layout_marginTop="@dimen/activity_vertical_margin"
+                        android:layout_marginLeft="@dimen/activity_vertical_margin"
+                        android:textSize="10sp"
+                        android:background="@color/colorPrimary"
+                        />
                 </LinearLayout>
 
             </LinearLayout>

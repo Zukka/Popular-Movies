@@ -102,22 +102,8 @@ public class MainActivity extends AppCompatActivity {
                 return null;
             }
             String endPointURL = params[0];
-            if (endPointURL != PopularMoviesConstants.THE_MOVIE_DB_LOCAL_DATABASE_ENDPOINT) {
-                URL movieRequestUrl = NetworkUtils.buildRequestMoviesUrl(endPointURL);
 
-                try {
-                    String jsonMoviesResponse = NetworkUtils
-                            .getResponseFromHttpUrl(movieRequestUrl);
-
-                    List<Film> simpleJsonFilsData = TheMovieDbJsonUtils
-                            .getSimpleFilmsStringsFromJson(jsonMoviesResponse);
-
-                    return simpleJsonFilsData;
-
-                } catch (Exception e) {
-                    return null;
-                }
-            } else {
+            if (endPointURL.equals(PopularMoviesConstants.THE_MOVIE_DB_LOCAL_DATABASE_ENDPOINT)) {
                 List<Favorite> favoriteData = mDb.favoriteDao().getAllFavorites();
                 if (favoriteData != null) {
                     List<Film> filmData = new ArrayList<>();;
@@ -136,13 +122,28 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     return null;
                 }
+            } else {
+                URL movieRequestUrl = NetworkUtils.buildRequestMoviesUrl(endPointURL);
+
+                try {
+                    String jsonMoviesResponse = NetworkUtils
+                            .getResponseFromHttpUrl(movieRequestUrl);
+
+                    List<Film> simpleJsonFilsData = TheMovieDbJsonUtils
+                            .getSimpleFilmsStringsFromJson(jsonMoviesResponse);
+
+                    return simpleJsonFilsData;
+
+                } catch (Exception e) {
+                    return null;
+                }
             }
         }
 
         @Override
         protected void onPostExecute(List<Film> movieData) {
             isProgressBarVisible(false);
-            if (movieData != null) {
+            if (movieData != null && movieData.size() > 0) {
                 filmRecyclerView.setVisibility(View.VISIBLE);
                 filmRecycleViewAdapter.setFilmData(movieData);
                 filmRecyclerView.setAdapter(filmRecycleViewAdapter);

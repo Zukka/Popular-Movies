@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -33,14 +34,14 @@ public class DetailsActivity extends AppCompatActivity {
     private LinearLayoutManager trailerLinearLayoutManager;
     private ProgressBar trailerProgressBar;
     private AppDatabase mDb;
-
+    private Button addToFavoriteButton;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
 
         mDb = AppDatabase.getInstance(getApplicationContext());
-
+        addToFavoriteButton = findViewById(R.id.favoriteButton);
         if (savedInstanceState == null) {
             Intent detailsIntent = getIntent();
             film = detailsIntent.getParcelableExtra("film");
@@ -75,8 +76,15 @@ public class DetailsActivity extends AppCompatActivity {
 
         trailerRecyclerViewAdapter = new TrailerRecycleViewAdapter(this);
         trailerRecyclerView.setAdapter(trailerRecyclerViewAdapter);
-    }
 
+        addToFavoriteButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                new AddFavorite().execute(film.getId());
+            }
+        });
+    }
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
